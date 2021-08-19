@@ -19,7 +19,6 @@ public class Paddle : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         // Get mouse position relative to screen size and aspect ratio
         float mousePosX = (Input.mousePosition.x / Screen.width) * screenWidth;
         // Clamp to stop it going off the sides
