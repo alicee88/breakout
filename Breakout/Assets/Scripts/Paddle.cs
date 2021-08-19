@@ -6,6 +6,8 @@ public class Paddle : MonoBehaviour
 {
     float screenHeight;
     float screenWidth;
+    [SerializeField] float minXPos;
+    [SerializeField] float maxXPos;
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +22,10 @@ public class Paddle : MonoBehaviour
 
         // Get mouse position relative to screen size and aspect ratio
         float mousePosX = (Input.mousePosition.x / Screen.width) * screenWidth;
+        // Clamp to stop it going off the sides
+        mousePosX = Mathf.Clamp(mousePosX, minXPos, maxXPos);
         transform.position = new Vector2(mousePosX, transform.position.y);
 
     }
+
 }
