@@ -8,6 +8,7 @@ public class Paddle : MonoBehaviour
     float screenWidth;
     [SerializeField] float minXPos;
     [SerializeField] float maxXPos;
+    [SerializeField] AudioClip bounceSound;
    
     // Start is called before the first frame update
     void Start()
@@ -24,6 +25,11 @@ public class Paddle : MonoBehaviour
         // Clamp to stop it going off the sides
         mousePosX = Mathf.Clamp(mousePosX, minXPos, maxXPos);
         transform.position = new Vector2(mousePosX, transform.position.y);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        AudioSource.PlayClipAtPoint(bounceSound, Camera.main.transform.position);
     }
 
 }
