@@ -5,15 +5,18 @@ using UnityEngine;
 public class Block : MonoBehaviour
 {
     [SerializeField] AudioClip breakSound;
+    [SerializeField] GameObject hitBurst;
 
-    ParticleSystem hitBurst;
+    GameStatus gameStatus;
 
     // Start is called before the first frame update
     void Start()
     {
-        hitBurst = FindObjectOfType<ParticleSystem>();
-        var main = hitBurst.main;
+        ParticleSystem ps = hitBurst.GetComponent<ParticleSystem>();
+        var main = ps.main;
         main.startColor = GetComponent<SpriteRenderer>().color;
+
+        gameStatus = FindObjectOfType<GameStatus>();
     }
 
     // Update is called once per frame
@@ -24,9 +27,13 @@ public class Block : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         AudioSource.PlayClipAtPoint(breakSound, Camera.main.transform.position);
-        ParticleSystem burstInstance = Instantiate(hitBurst, transform.position, transform.rotation);
-        burstInstance.Play();
-       // Destroy(burstInstance);
+        DestroyBlock();
+    }
+
+    void DestroyBlock()
+    {
+        GameObject burstInstance = Instantiate(hitBurst, transform.position, transform.rotation);
+        Destroy(burstInstance, 1.5f);
         Destroy(gameObject);
     }
 }
